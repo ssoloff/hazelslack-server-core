@@ -14,32 +14,17 @@ const plumber = require('gulp-plumber')
 // Initialize the babel transpiler so ES2015 files gets compiled when they're loaded
 require('babel-register')
 
-gulp.task('babel', ['clean'], () => {
-  return gulp.src('lib/**/*.js')
-    .pipe(babel())
-    .pipe(gulp.dest('dist'))
-})
-
 gulp.task('clean', () => {
   return del('dist')
 })
 
-gulp.task('coveralls', ['test'], () => {
-  if (!process.env.CI) {
-    return
-  }
+gulp.task('babel', gulp.series('clean', function babelInternal () {
+  return gulp.src('lib/**/*.js')
+    .pipe(babel())
+    .pipe(gulp.dest('dist'))
+}))
 
-  return gulp.src(path.join(__dirname, 'coverage/lcov.info'))
-    .pipe(coveralls())
-})
-
-gulp.task('default', ['static', 'test', 'coveralls'])
-
-gulp.task('nsp', (done) => {
-  nsp({package: path.resolve('package.json')}, done)
-})
-
-gulp.task('pre-test', () => {
+gulp.task('pretest', () => {
   return gulp.src('lib/**/*.js')
     .pipe(excludeGitignore())
     .pipe(istanbul({
@@ -49,17 +34,7 @@ gulp.task('pre-test', () => {
     .pipe(istanbul.hookRequire())
 })
 
-gulp.task('prepublish', ['nsp', 'babel'])
-
-gulp.task('static', () => {
-  return gulp.src('**/*.js')
-    .pipe(excludeGitignore())
-    .pipe(eslint())
-    .pipe(eslint.format())
-    .pipe(eslint.failAfterError())
-})
-
-gulp.task('test', ['pre-test'], (done) => {
+gulp.task('test', gulp.series('pretest', function testInternal (done) {
   let mochaErr
 
   gulp.src('test/**/*.js')
@@ -72,8 +47,34 @@ gulp.task('test', ['pre-test'], (done) => {
     .on('end', () => {
       done(mochaErr)
     })
+}))
+
+gulp.task('coveralls', gulp.series('test', function coverallsInternal () {
+  if (!process.env.CI) {
+    return Promise.resolve()
+  }
+
+  return gulp.src(path.join(__dirname, 'coverage/lcov.info'))
+    .pipe(coveralls())
+}))
+
+gulp.task('static', () => {
+  return gulp.src('**/*.js')
+    .pipe(excludeGitignore())
+    .pipe(eslint())
+    .pipe(eslint.format())
+    .pipe(eslint.failAfterError())
 })
 
+gulp.task('default', gulp.parallel('static', 'test', 'coveralls'))
+
+gulp.task('nsp', (done) => {
+  nsp({package: path.resolve('package.json')}, done)
+})
+
+gulp.task('prepublish', gulp.parallel('nsp', 'babel'))
+
 gulp.task('watch', () => {
-  gulp.watch(['lib/**/*.js', 'test/**'], ['test'])
+  gulp.watch(['lib/**/*.js', 'test/**'], gulp.parallel('test'))
+    .on('error', () => {}) // ignore errors during watch
 })
