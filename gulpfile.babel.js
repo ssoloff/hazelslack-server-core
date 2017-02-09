@@ -11,8 +11,7 @@ import del from 'del'
 import eslint from 'gulp-eslint'
 import excludeGitignore from 'gulp-exclude-gitignore'
 import gulp from 'gulp'
-import * as isparta from 'isparta'
-import istanbul from 'gulp-istanbul'
+import istanbul from 'gulp-babel-istanbul'
 import jasmine from 'gulp-jasmine'
 import nsp from 'gulp-nsp'
 import path from 'path'
@@ -37,8 +36,7 @@ function beforeTest () {
   return gulp.src(paths.js.main)
     .pipe(excludeGitignore())
     .pipe(istanbul({
-      includeUntested: true,
-      instrumenter: isparta.Instrumenter
+      includeUntested: true
     }))
     .pipe(istanbul.hookRequire())
 }
