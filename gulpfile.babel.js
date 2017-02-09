@@ -13,17 +13,16 @@ import excludeGitignore from 'gulp-exclude-gitignore'
 import gulp from 'gulp'
 import * as isparta from 'isparta'
 import istanbul from 'gulp-istanbul'
-import mocha from 'gulp-mocha'
+import jasmine from 'gulp-jasmine'
 import nsp from 'gulp-nsp'
 import path from 'path'
-import plumber from 'gulp-plumber'
 
 const dirs = {
   coverage: 'coverage',
   dist: 'dist',
   js: {
     main: 'lib',
-    test: 'test'
+    test: 'spec'
   }
 }
 const paths = {
@@ -75,19 +74,12 @@ export function publishCoverage () {
     .pipe(coveralls())
 }
 
-function testInternal (done) {
-  let mochaErr
-
-  gulp.src(paths.js.test)
-    .pipe(plumber())
-    .pipe(mocha({reporter: 'spec'}))
-    .on('error', (err) => {
-      mochaErr = err
-    })
+function testInternal () {
+  return gulp.src(paths.js.test)
+    .pipe(jasmine({
+      verbose: true
+    }))
     .pipe(istanbul.writeReports())
-    .on('end', () => {
-      done(mochaErr)
-    })
 }
 
 export function watch () {

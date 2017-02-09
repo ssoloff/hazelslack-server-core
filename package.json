@@ -45,10 +45,9 @@
     "gulp-eslint": "3.0.1",
     "gulp-exclude-gitignore": "1.1.1",
     "gulp-istanbul": "1.1.1",
+    "gulp-jasmine": "~2.4.2",
     "gulp-line-ending-corrector": "1.0.1",
-    "gulp-mocha": "3.0.1",
     "gulp-nsp": "2.4.2",
-    "gulp-plumber": "1.1.0",
     "isparta": "4.0.0"
   },
   "scripts": {
