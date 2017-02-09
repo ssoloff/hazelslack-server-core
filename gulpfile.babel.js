@@ -1,34 +1,31 @@
-const babel = require('gulp-babel')
-const coveralls = require('gulp-coveralls')
-const del = require('del')
-const eslint = require('gulp-eslint')
-const excludeGitignore = require('gulp-exclude-gitignore')
-const gulp = require('gulp')
-const isparta = require('isparta')
-const istanbul = require('gulp-istanbul')
-const mocha = require('gulp-mocha')
-const nsp = require('gulp-nsp')
-const path = require('path')
-const plumber = require('gulp-plumber')
+import babel from 'gulp-babel'
+import coveralls from 'gulp-coveralls'
+import del from 'del'
+import eslint from 'gulp-eslint'
+import excludeGitignore from 'gulp-exclude-gitignore'
+import gulp from 'gulp'
+import * as isparta from 'isparta'
+import istanbul from 'gulp-istanbul'
+import mocha from 'gulp-mocha'
+import nsp from 'gulp-nsp'
+import path from 'path'
+import plumber from 'gulp-plumber'
 
-// Initialize the babel transpiler so files gets compiled when they're loaded
-require('babel-register')
-
-function checkSecurity (done) {
+export function checkSecurity (done) {
   nsp({package: path.resolve('package.json')}, done)
 }
 
-function clean () {
+export function clean () {
   return del('dist')
 }
 
-function compile () {
+export function compile () {
   return gulp.src('lib/**/*.js')
     .pipe(babel())
     .pipe(gulp.dest('dist'))
 }
 
-function lint () {
+export function lint () {
   return gulp.src('**/*.js')
     .pipe(excludeGitignore())
     .pipe(eslint())
@@ -46,7 +43,7 @@ function pretest () {
     .pipe(istanbul.hookRequire())
 }
 
-function publishCoverage () {
+export function publishCoverage () {
   if (!process.env.CI) {
     return Promise.resolve()
   }
@@ -70,27 +67,13 @@ function testInternal (done) {
     })
 }
 
-function watch () {
+export function watch () {
   gulp.watch(['lib/**/*.js', 'test/**'], gulp.parallel(test))
     .on('error', () => {}) // ignore errors during watch so Gulp does not exit
 }
 
-const test = gulp.series(pretest, testInternal)
-
-gulp.task('checkSecurity', checkSecurity)
-
-gulp.task('clean', clean)
-
-gulp.task('compile', compile)
+export const test = gulp.series(pretest, testInternal)
 
 gulp.task('default', gulp.parallel(lint, test))
 
-gulp.task('lint', lint)
-
 gulp.task('prepublish', gulp.series(clean, gulp.parallel(checkSecurity, compile)))
-
-gulp.task('publishCoverage', publishCoverage)
-
-gulp.task('test', test)
-
-gulp.task('watch', watch)
