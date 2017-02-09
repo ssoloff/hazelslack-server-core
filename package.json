@@ -45,7 +45,7 @@
     "gulp-eslint": "3.0.1",
     "gulp-exclude-gitignore": "1.1.1",
     "gulp-istanbul": "1.1.1",
-    "gulp-jasmine": "~2.4.2",
+    "gulp-jasmine": "2.4.2",
     "gulp-nsp": "2.4.2",
     "isparta": "4.0.0"
   },
