@@ -1,0 +1,21 @@
+{
+  "root": true,
+  "extends": [
+    "eslint:recommended",
+    "plugin:node/recommended",
+    "standard"
+  ],
+  "plugins": [
+    "node"
+  ],
+  "rules": {
+    "node/no-unsupported-features": [
+      "error",
+      {
+        "ignores": [
+          "modules"
+        ]
+      }
+    ]
+  }
+}

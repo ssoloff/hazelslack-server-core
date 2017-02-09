@@ -51,29 +51,6 @@
     "gulp-plumber": "1.1.0",
     "isparta": "4.0.0"
   },
-  "eslintConfig": {
-    "env": {
-      "mocha": true
-    },
-    "extends": [
-      "eslint:recommended",
-      "plugin:node/recommended",
-      "standard"
-    ],
-    "plugins": [
-      "node"
-    ],
-    "rules": {
-      "node/no-unsupported-features": [
-        "error",
-        {
-          "ignores": [
-            "modules"
-          ]
-        }
-      ]
-    }
-  },
   "scripts": {
     "prepublish": "gulp prepublish",
     "test": "gulp"
