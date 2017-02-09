@@ -18,22 +18,38 @@ import nsp from 'gulp-nsp'
 import path from 'path'
 import plumber from 'gulp-plumber'
 
+const dirs = {
+  coverage: 'coverage',
+  dist: 'dist',
+  js: {
+    main: 'lib',
+    test: 'test'
+  }
+}
+const paths = {
+  js: {
+    all: '**/*.js',
+    main: `${dirs.js.main}/**/*.js`,
+    test: `${dirs.js.test}/**/*.js`
+  }
+}
+
 export function checkSecurity (done) {
   nsp({package: path.resolve('package.json')}, done)
 }
 
 export function clean () {
-  return del('dist')
+  return del([dirs.coverage, dirs.dist])
 }
 
 export function compile () {
-  return gulp.src('lib/**/*.js')
+  return gulp.src(paths.js.main)
     .pipe(babel())
-    .pipe(gulp.dest('dist'))
+    .pipe(gulp.dest(dirs.dist))
 }
 
 export function lint () {
-  return gulp.src('**/*.js')
+  return gulp.src(paths.js.all)
     .pipe(excludeGitignore())
     .pipe(eslint())
     .pipe(eslint.format())
@@ -41,7 +57,7 @@ export function lint () {
 }
 
 function pretest () {
-  return gulp.src('lib/**/*.js')
+  return gulp.src(paths.js.main)
     .pipe(excludeGitignore())
     .pipe(istanbul({
       includeUntested: true,
@@ -55,14 +71,14 @@ export function publishCoverage () {
     return Promise.resolve()
   }
 
-  return gulp.src(path.join(__dirname, 'coverage/lcov.info'))
+  return gulp.src(path.join(__dirname, `${dirs.coverage}/lcov.info`))
     .pipe(coveralls())
 }
 
 function testInternal (done) {
   let mochaErr
 
-  gulp.src('test/**/*.js')
+  gulp.src(paths.js.test)
     .pipe(plumber())
     .pipe(mocha({reporter: 'spec'}))
     .on('error', (err) => {
@@ -75,7 +91,7 @@ function testInternal (done) {
 }
 
 export function watch () {
-  gulp.watch(['lib/**/*.js', 'test/**'], gulp.parallel(test))
+  gulp.watch([paths.js.main, paths.js.test], gulp.parallel(test))
     .on('error', () => {}) // ignore errors during watch so Gulp does not exit
 }
 
