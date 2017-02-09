@@ -33,6 +33,16 @@ const paths = {
   }
 }
 
+function beforeTest () {
+  return gulp.src(paths.js.main)
+    .pipe(excludeGitignore())
+    .pipe(istanbul({
+      includeUntested: true,
+      instrumenter: isparta.Instrumenter
+    }))
+    .pipe(istanbul.hookRequire())
+}
+
 export function checkSecurity (done) {
   nsp({package: path.resolve('package.json')}, done)
 }
@@ -47,22 +57,20 @@ export function compile () {
     .pipe(gulp.dest(dirs.dist))
 }
 
+function coreTest () {
+  return gulp.src(paths.js.test)
+    .pipe(jasmine({
+      verbose: true
+    }))
+    .pipe(istanbul.writeReports())
+}
+
 export function lint () {
   return gulp.src(paths.js.all)
     .pipe(excludeGitignore())
     .pipe(eslint())
     .pipe(eslint.format())
     .pipe(eslint.failAfterError())
-}
-
-function pretest () {
-  return gulp.src(paths.js.main)
-    .pipe(excludeGitignore())
-    .pipe(istanbul({
-      includeUntested: true,
-      instrumenter: isparta.Instrumenter
-    }))
-    .pipe(istanbul.hookRequire())
 }
 
 export function publishCoverage () {
@@ -74,20 +82,14 @@ export function publishCoverage () {
     .pipe(coveralls())
 }
 
-function testInternal () {
-  return gulp.src(paths.js.test)
-    .pipe(jasmine({
-      verbose: true
-    }))
-    .pipe(istanbul.writeReports())
+export function test (...args) {
+  return gulp.series(beforeTest, coreTest)(...args)
 }
 
 export function watch () {
   gulp.watch([paths.js.main, paths.js.test], gulp.parallel(test))
     .on('error', () => {}) // ignore errors during watch so Gulp does not exit
 }
-
-export const test = gulp.series(pretest, testInternal)
 
 gulp.task('default', gulp.parallel(lint, test))
 
