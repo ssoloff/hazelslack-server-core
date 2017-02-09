@@ -53,6 +53,7 @@
   },
   "scripts": {
     "prepublish": "gulp prepublish",
+    "publishCoverage": "gulp publishCoverage",
     "test": "gulp"
   }
 }
