@@ -61,6 +61,11 @@ function coreTest () {
       verbose: true
     }))
     .pipe(istanbul.writeReports())
+    .pipe(istanbul.enforceThresholds({
+      thresholds: {
+        global: 90
+      }
+    }))
 }
 
 export function lint () {
