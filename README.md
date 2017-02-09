@@ -17,13 +17,14 @@ hazelslackServerCore('Rainbow');
 
 ## License
 
-GNU AGPLv3 © [Steven Soloff](https://github.com/ssoloff)
+This software is licensed under the terms of the [GNU Affero General Public License][license-url] version 3 or later.
 
+[coveralls-image]: https://coveralls.io/repos/ssoloff/hazelslack-server-core/badge.svg
+[coveralls-url]: https://coveralls.io/r/ssoloff/hazelslack-server-core
+[daviddm-image]: https://david-dm.org/ssoloff/hazelslack-server-core.svg?theme=shields.io
+[daviddm-url]: https://david-dm.org/ssoloff/hazelslack-server-core
+[license-url]: https://www.gnu.org/licenses/
 [npm-image]: https://badge.fury.io/js/hazelslack-server-core.svg
 [npm-url]: https://npmjs.org/package/hazelslack-server-core
 [travis-image]: https://travis-ci.org/ssoloff/hazelslack-server-core.svg?branch=master
 [travis-url]: https://travis-ci.org/ssoloff/hazelslack-server-core
-[daviddm-image]: https://david-dm.org/ssoloff/hazelslack-server-core.svg?theme=shields.io
-[daviddm-url]: https://david-dm.org/ssoloff/hazelslack-server-core
-[coveralls-image]: https://coveralls.io/repos/ssoloff/hazelslack-server-core/badge.svg
-[coveralls-url]: https://coveralls.io/r/ssoloff/hazelslack-server-core

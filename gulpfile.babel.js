@@ -1,3 +1,10 @@
+/*
+ * Copyright (C) 2017 Steven Soloff
+ *
+ * This software is licensed under the terms of the GNU Affero General Public
+ * License version 3 or later (https://www.gnu.org/licenses/).
+ */
+
 import babel from 'gulp-babel'
 import coveralls from 'gulp-coveralls'
 import del from 'del'
