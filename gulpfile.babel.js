@@ -15,6 +15,7 @@ import istanbul from 'gulp-babel-istanbul'
 import jasmine from 'gulp-jasmine'
 import nsp from 'gulp-nsp'
 import path from 'path'
+import streamToPromise from 'stream-to-promise'
 
 const dirs = {
   coverage: 'coverage',
@@ -32,15 +33,6 @@ const paths = {
   }
 }
 
-function beforeTest () {
-  return gulp.src(paths.js.main)
-    .pipe(excludeGitignore())
-    .pipe(istanbul({
-      includeUntested: true
-    }))
-    .pipe(istanbul.hookRequire())
-}
-
 export function checkSecurity (done) {
   nsp({package: path.resolve('package.json')}, done)
 }
@@ -53,19 +45,6 @@ export function compile () {
   return gulp.src(paths.js.main)
     .pipe(babel())
     .pipe(gulp.dest(dirs.dist))
-}
-
-function coreTest () {
-  return gulp.src(paths.js.test)
-    .pipe(jasmine({
-      verbose: true
-    }))
-    .pipe(istanbul.writeReports())
-    .pipe(istanbul.enforceThresholds({
-      thresholds: {
-        global: 90
-      }
-    }))
 }
 
 export function lint () {
@@ -85,13 +64,35 @@ export function publishCoverage () {
     .pipe(coveralls())
 }
 
+export function test () {
+  return streamToPromise(
+    gulp.src(paths.js.main)
+      .pipe(excludeGitignore())
+      .pipe(istanbul({
+        includeUntested: true
+      }))
+      .pipe(istanbul.hookRequire())
+  )
+  .then(() => streamToPromise(
+    gulp.src(paths.js.test)
+      .pipe(excludeGitignore())
+      .pipe(jasmine({
+        verbose: true
+      }))
+      .pipe(istanbul.writeReports())
+      .pipe(istanbul.enforceThresholds({
+        thresholds: {
+          global: 90
+        }
+      }))
+  ))
+}
+
 export function watch () {
-  gulp.watch([paths.js.main, paths.js.test], gulp.parallel('test'))
+  gulp.watch([paths.js.main, paths.js.test], gulp.parallel(test))
     .on('error', () => {}) // ignore errors during watch so Gulp does not exit
 }
 
+gulp.task('default', gulp.parallel(lint, test))
+
 gulp.task('prepublish', gulp.series(clean, gulp.parallel(checkSecurity, compile)))
-
-gulp.task('test', gulp.series(beforeTest, coreTest))
-
-gulp.task('default', gulp.parallel(lint, 'test'))
