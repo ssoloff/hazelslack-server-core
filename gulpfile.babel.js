@@ -17,14 +17,19 @@ import nsp from 'gulp-nsp'
 import path from 'path'
 import streamToPromise from 'stream-to-promise'
 
-const dirs = {
-  coverage: 'coverage',
-  dist: 'dist',
-  js: {
-    main: 'lib',
-    test: 'spec'
+const dirs = (() => {
+  const BUILD_DIR = '.build'
+  return {
+    build: BUILD_DIR,
+    coverage: `${BUILD_DIR}/coverage`,
+    dist: `${BUILD_DIR}/dist`,
+    js: {
+      main: 'lib',
+      test: 'spec'
+    }
   }
-}
+})()
+
 const paths = {
   js: {
     all: '**/*.js',
@@ -38,7 +43,7 @@ export function checkSecurity (done) {
 }
 
 export function clean () {
-  return del([dirs.coverage, dirs.dist])
+  return del(dirs.build)
 }
 
 export function compile () {
@@ -79,7 +84,9 @@ export function test () {
       .pipe(jasmine({
         verbose: true
       }))
-      .pipe(istanbul.writeReports())
+      .pipe(istanbul.writeReports({
+        dir: dirs.coverage
+      }))
       .pipe(istanbul.enforceThresholds({
         thresholds: {
           global: 90
