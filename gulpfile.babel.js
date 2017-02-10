@@ -85,15 +85,13 @@ export function publishCoverage () {
     .pipe(coveralls())
 }
 
-export function test (...args) {
-  return gulp.series(beforeTest, coreTest)(...args)
-}
-
 export function watch () {
-  gulp.watch([paths.js.main, paths.js.test], gulp.parallel(test))
+  gulp.watch([paths.js.main, paths.js.test], gulp.parallel('test'))
     .on('error', () => {}) // ignore errors during watch so Gulp does not exit
 }
 
-gulp.task('default', gulp.parallel(lint, test))
-
 gulp.task('prepublish', gulp.series(clean, gulp.parallel(checkSecurity, compile)))
+
+gulp.task('test', gulp.series(beforeTest, coreTest))
+
+gulp.task('default', gulp.parallel(lint, 'test'))
