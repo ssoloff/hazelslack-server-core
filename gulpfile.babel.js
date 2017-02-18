@@ -61,7 +61,7 @@ export function lint () {
 }
 
 export function publishCoverage () {
-  if (!process.env.CI) {
+  if (process.env.CI !== 'true') {
     return Promise.resolve()
   }
 
