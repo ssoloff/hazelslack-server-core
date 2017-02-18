@@ -1,17 +1,11 @@
 # hazelslack-server-core
 
-Stable: [![NPM version][npm-image]][npm-url] 
-  [![Build Status][travis-image-master]][travis-url] 
-  [![Coverage Status][coveralls-image-master]][coveralls-url-master] 
-  [![Dependency Status][daviddm-prod-image-master]][daviddm-prod-url-master] 
-  [![Dev Dependency Status][daviddm-dev-image-master]][daviddm-dev-url-master]
-
-Latest: [![Build Status][travis-image-develop]][travis-url] 
-  [![Coverage Status][coveralls-image-develop]][coveralls-url-develop] 
-  [![Dependency Status][daviddm-prod-image-develop]][daviddm-prod-url-develop] 
-  [![Dev Dependency Status][daviddm-dev-image-develop]][daviddm-dev-url-develop]
-
 > Hazelslack server core module
+
+Release | Status
+:-- | :--
+Stable | [![NPM version][npm-image]][npm-url] [![Build Status][travis-image-master]][travis-url] [![Coverage Status][coveralls-image-master]][coveralls-url-master] [![Dependency Status][daviddm-prod-image-master]][daviddm-prod-url-master] [![Dev Dependency Status][daviddm-dev-image-master]][daviddm-dev-url-master]
+Latest | [![Build Status][travis-image-develop]][travis-url] [![Coverage Status][coveralls-image-develop]][coveralls-url-develop] [![Dependency Status][daviddm-prod-image-develop]][daviddm-prod-url-develop] [![Dev Dependency Status][daviddm-dev-image-develop]][daviddm-dev-url-develop]
 
 ## Installation
 
