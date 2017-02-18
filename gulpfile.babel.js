@@ -84,6 +84,9 @@ export function test () {
       .pipe(jasmine({
         verbose: true
       }))
+  ))
+  .then(() => streamToPromise(
+    gulp.src('.')
       .pipe(istanbul.writeReports({
         dir: dirs.coverage
       }))
