@@ -38,11 +38,11 @@ This software is licensed under the terms of the [GNU Affero General Public Lice
 [daviddm-dev-image-develop]: https://david-dm.org/ssoloff/hazelslack-server-core/develop/dev-status.svg?theme=shields.io
 [daviddm-dev-image-master]: https://david-dm.org/ssoloff/hazelslack-server-core/master/dev-status.svg?theme=shields.io
 [daviddm-dev-url-develop]: https://david-dm.org/ssoloff/hazelslack-server-core/develop?type=dev
-[daviddm-dev-url-master]: https://david-dm.org/ssoloff/hazelslack-server-core?type=dev
+[daviddm-dev-url-master]: https://david-dm.org/ssoloff/hazelslack-server-core/master?type=dev
 [daviddm-prod-image-develop]: https://david-dm.org/ssoloff/hazelslack-server-core/develop/status.svg?theme=shields.io
 [daviddm-prod-image-master]: https://david-dm.org/ssoloff/hazelslack-server-core/master/status.svg?theme=shields.io
 [daviddm-prod-url-develop]: https://david-dm.org/ssoloff/hazelslack-server-core/develop
-[daviddm-prod-url-master]: https://david-dm.org/ssoloff/hazelslack-server-core
+[daviddm-prod-url-master]: https://david-dm.org/ssoloff/hazelslack-server-core/master
 [license-url]: https://www.gnu.org/licenses/
 [npm-image]: https://badge.fury.io/js/hazelslack-server-core.svg
 [npm-url]: https://npmjs.org/package/hazelslack-server-core
