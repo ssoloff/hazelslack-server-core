@@ -6,5 +6,10 @@
  */
 
 export default {
-  port: process.env.PORT || 3000
+  encodings: {
+    serverPid: 'utf8'
+  },
+  paths: {
+    serverPid: '.server.pid'
+  }
 }

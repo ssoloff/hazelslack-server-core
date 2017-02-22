@@ -29,8 +29,7 @@
   "main": ".build/dist/server.js",
   "dependencies": {
     "express": "4.14.1",
-    "http-status-codes": "1.1.6",
-    "socket.io": "1.7.3"
+    "http-status-codes": "1.1.6"
   },
   "devDependencies": {
     "babel-cli": "6.23.0",
@@ -56,12 +55,13 @@
     "gulp-jasmine": "2.4.2",
     "gulp-nsp": "2.4.2",
     "request": "2.79.0",
-    "stream-to-promise": "2.2.0"
+    "stream-to-promise": "2.2.0",
+    "tree-kill": "1.1.0"
   },
   "scripts": {
     "prepublish": "gulp prepublish",
     "publishCoverage": "gulp publishCoverage",
-    "start": "babel-node lib/server.js",
+    "start": "babel-node build/npm/start-server.js",
     "stop": "babel-node build/npm/stop-server.js",
     "test": "gulp",
     "test:acceptance": "cucumber-js --compiler js:babel-core/register"

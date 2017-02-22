@@ -5,12 +5,14 @@
  * License version 3 or later (https://www.gnu.org/licenses/).
  */
 
-import config from '../../lib/config'
-import io from 'socket.io-client'
+import config from './config'
+import del from 'del'
+import fs from 'fs'
+import kill from 'tree-kill'
 
-const socket = io(`http://localhost:${config.managementPort}`)
-socket.on('connect', () => {
-  socket.emit('stop', () => {
-    socket.close()
-  })
+const serverPid = fs.readFileSync(config.paths.serverPid, {
+  encoding: config.encodings.serverPid
 })
+del(config.paths.serverPid)
+
+kill(serverPid)
