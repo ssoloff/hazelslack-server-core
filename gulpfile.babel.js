@@ -92,7 +92,7 @@ export function test () {
       }))
       .pipe(istanbul.enforceThresholds({
         thresholds: {
-          global: 90
+          global: 75
         }
       }))
   ))
