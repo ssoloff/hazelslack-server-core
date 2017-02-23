@@ -6,13 +6,12 @@
  */
 
 import config from './config'
-import del from 'del'
 import fs from 'fs'
 import kill from 'tree-kill'
 
 const serverPid = fs.readFileSync(config.paths.serverPid, {
   encoding: config.encodings.serverPid
 })
-del(config.paths.serverPid)
+fs.unlinkSync(config.paths.serverPid)
 
 kill(serverPid)
