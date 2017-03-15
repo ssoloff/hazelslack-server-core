@@ -10,11 +10,11 @@ import { defineSupportCode } from 'cucumber'
 import httpStatus from 'http-status-codes'
 
 defineSupportCode(({Given, When, Then}) => {
-  Given('the addend {addend:int}', function (addend) {
+  Given('the addend {int}', function (addend) {
     this.sumService.setAddend(addend)
   })
 
-  Given('the augend {augend:int}', function (augend) {
+  Given('the augend {int}', function (augend) {
     this.sumService.setAugend(augend)
   })
 
@@ -25,7 +25,7 @@ defineSupportCode(({Given, When, Then}) => {
     })
   })
 
-  Then('the response should contain the sum {sum:int}', function (sum) {
+  Then('the response should contain the sum {int}', function (sum) {
     expect(this.res.statusCode).to.equal(httpStatus.OK)
     expect(this.res.body.sum).to.equal(sum)
   })
