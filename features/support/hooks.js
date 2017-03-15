@@ -8,7 +8,7 @@
 import { defineSupportCode } from 'cucumber'
 
 defineSupportCode(({Before}) => {
-  Before(function (scenario, callback) {
+  Before(function (scenarioResult, callback) {
     this.sumService = this.createSumService()
     this.res = null
     callback()
